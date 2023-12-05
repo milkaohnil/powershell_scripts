@@ -1,7 +1,6 @@
 <#
 .Synopsis
   The script is designed to automatically assign Numbers in Microsoft Teams Telephony
-
 .OUTPUTS
    The script applies specific Numberassignments from a CSV-File with the Attributes User,TestNumber & Number
 .NOTES
