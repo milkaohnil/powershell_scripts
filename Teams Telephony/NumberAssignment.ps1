@@ -7,7 +7,7 @@
 .NOTES
    ===========================================================================
 	 Created on:   	01.12.2023
-	 Created by:   	Mika Kreienbuehl
+	 Created by:   	Mika Kreienbühl
 	 Filename:     	xxx-number-assignment-teams_telephony.ps1
 	===========================================================================
 .COMPONENT
