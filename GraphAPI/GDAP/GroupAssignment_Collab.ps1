@@ -118,16 +118,55 @@ foreach ($gdapRelationship in $activeGDAPRelationships) {
             accessDetails = @{
 		    unifiedRoles = @(
 			    @{
-				    roleDefinitionId = "88d8e3e3-8f55-4a1e-953a-9b9898b8876b"
+				    roleDefinitionId = "44367163-eba1-44c3-98af-f5787879f96a"
 			    }
 			    @{
-				    roleDefinitionId = "5d6b6bb7-de71-4623-b4af-96380a352509"
+				    roleDefinitionId = "29232cdf-9323-42fd-ade2-1d097af3e4de"
 			    }
 			    @{
-				    roleDefinitionId = "790c1fb9-7f7d-4f88-86a1-ef1f95c05c1b"
+				    roleDefinitionId = "fdd7a751-b60b-444a-984c-02652fe8fa1c"
 			    }
 			    @{
-				    roleDefinitionId = "75934031-6c7e-415a-99d7-48dbd49e875e"
+				    roleDefinitionId = "a9ea8996-122f-4c74-9520-8edcd192826c"
+			    }
+                @{
+				    roleDefinitionId = "69091246-20e8-4a56-aa4d-066075b2a7a8"
+			    }
+			    @{
+				    roleDefinitionId = "2b745bdf-0803-4d80-aa65-822c4493daac"
+			    }
+			    @{
+				    roleDefinitionId = "11648597-926c-4cf3-9c36-bcebb0ba8dcc"
+			    }
+			    @{
+				    roleDefinitionId = "f28a1f50-f6e7-4571-818b-6a12f2af6b6c"
+			    }
+			    @{
+				    roleDefinitionId = "729827e3-9c14-49f7-bb1b-9608f156bbb8"
+			    }
+			    @{
+				    roleDefinitionId = "fe930be7-5e62-47db-91af-98c3a49a38b1"
+			    }
+			    @{
+				    roleDefinitionId = "9360feb5-f418-4baa-8175-e2a00bac4301"
+			    }
+			    @{
+				    roleDefinitionId = "f2ef992c-3afb-46b9-b7cf-a126ee74c451"
+			    }
+			    @{
+				    roleDefinitionId = "17315797-102d-40b4-93e0-432062caca18"
+			    }
+			    @{
+				    roleDefinitionId = "e6d1a23a-da11-4be4-9570-befc86d067a7"
+			    }
+			    @{
+				    roleDefinitionId = "194ae4cb-b126-40b2-bd5b-6091b380977d"
+			    }
+			    @{
+				    roleDefinitionId = "7495fdc4-34c4-4d15-a289-98788ce399fd"
+			    }
+			    @{
+				    roleDefinitionId = "5c4f9dcd-47dc-4cf7-8c9a-9e4207cbfc91"
 			    }
 		    )
 	    }
