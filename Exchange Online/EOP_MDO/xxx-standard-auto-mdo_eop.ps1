@@ -31,9 +31,6 @@
 $module1 = "ExchangeOnlineManagement"
 $module2 = "O365CentralizedAddInDeployment"
 
-# csa username
-$csa = Read-Host -Prompt "Enter your csa username"
-
 # Connect to a customer tenant over the onmicrosoft domain via GDAP permissions
 $custommicrosoft = $csa = Read-Host -Prompt "Enter the onmicrosoft address of the customer eq. customer.onmicrosoft.com"
 
@@ -44,7 +41,7 @@ $language = Read-Host -Prompt "Enter the language of the tenant eq. English or D
 $sharedmailboxname = Read-Host -Prompt "Enter the Shared Mailbox name eq. Quarantine - xxx"
 $sharedMailboxAlias = Read-Host -Prompt "Enter the Shared Mailbox alias eq. quarantine"
 $sharedMailboxEmail = Read-Host -Prompt "Enter the Shared Mailbox mail address eq. quarantine@domain.tld"
-$sharedmailboxaccessusers= Read-Host -Prompt "Enter who should have access to the quarantine mailbox eq. michele.blum@domain.tdl,flavio.meyer@domain.tdl"
+$sharedmailboxaccessusers= Read-Host -Prompt "Enter who should have access to the quarantine mailbox eq. mika.kreienbuehl@domain.tdl,michele.blum@domain.tdl"
 # Split string into string object array
 $users = $sharedmailboxaccessusers.Split(',')
 
@@ -105,7 +102,7 @@ function exoauthentication {
   }
 
     # Connect to the exo tenant with your exo admin and security admin (gdap organization)
-    Connect-ExchangeOnline -UserPrincipalName $csa -DelegatedOrganization $custommicrosoft
+    Connect-ExchangeOnline -DelegatedOrganization $custommicrosoft
 
 }
 
@@ -169,7 +166,7 @@ function disableexternalforwarding {
     Set-RemoteDomain * -AutoForwardEnabled $false
     }
     else {
-      Write-Host "External forwarding ist already disabled."
+      Write-Host "External forwarding is already disabled."
     }
 
 }
