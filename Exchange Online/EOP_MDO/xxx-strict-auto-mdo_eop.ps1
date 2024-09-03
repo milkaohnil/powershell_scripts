@@ -12,7 +12,7 @@
 .NOTES
    ===========================================================================
 	 Created on:   	16.11.2023
-	 Created by:   	Michele Blum
+	 Created by:   	Mika Kreienbühl
 	 Filename:     	xxx-strict-auto-mdo_eop.ps1
 	===========================================================================
 .COMPONENT
