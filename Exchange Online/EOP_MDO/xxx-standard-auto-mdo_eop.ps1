@@ -99,7 +99,7 @@ function exoauthentication {
   }
 
     # Connect to the exo tenant with your exo admin and security admin (gdap organization)
-    Connect-ExchangeOnline
+    Connect-ExchangeOnline -UserPrincipalName $csa
 
 }
 
