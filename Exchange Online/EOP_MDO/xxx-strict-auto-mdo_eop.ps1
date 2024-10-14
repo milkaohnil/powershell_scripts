@@ -44,7 +44,7 @@ $language = Read-Host -Prompt "Enter the language of the tenant eq. English or D
 $sharedmailboxname = Read-Host -Prompt "Enter the Shared Mailbox name eq. Quarantine - xxx"
 $sharedMailboxAlias = Read-Host -Prompt "Enter the Shared Mailbox alias eq. quarantine"
 $sharedMailboxEmail = Read-Host -Prompt "Enter the Shared Mailbox mail address eq. quarantine@domain.tld"
-$sharedmailboxaccessusers= Read-Host -Prompt "Enter who should have access to the quarantine mailbox eq. michele.blum@domain.tdl,flavio.meyer@domain.tdl"
+$sharedmailboxaccessusers= Read-Host -Prompt "Enter who should have access to the quarantine mailbox eq. mika.kreienbuehl@domain.tdl, michele.blum@domain.tdl"
 # Split string into string object array
 $users = $sharedmailboxaccessusers.Split(',')
 
