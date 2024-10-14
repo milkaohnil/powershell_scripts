@@ -31,6 +31,9 @@
 $module1 = "ExchangeOnlineManagement"
 $module2 = "O365CentralizedAddInDeployment"
 
+# csa username
+$csa = Read-Host -Prompt "Enter your username"
+
 # Organisation language
 $language = Read-Host -Prompt "Enter the language of the tenant eq. English or Deutsch (Standardfreigaberichtlinie vs. Default Sharing Policy)"
 
