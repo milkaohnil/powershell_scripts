@@ -32,10 +32,7 @@ $module1 = "ExchangeOnlineManagement"
 $module2 = "O365CentralizedAddInDeployment"
 
 # csa username
-$csa = Read-Host -Prompt "Enter your csa username"
-
-# Connect to a customer tenant over the onmicrosoft domain via GDAP permissions
-$custommicrosoft = $csa = Read-Host -Prompt "Enter the onmicrosoft address of the customer eq. customer.onmicrosoft.com"
+$csa = Read-Host -Prompt "Enter your username"
 
 # Organisation language
 $language = Read-Host -Prompt "Enter the language of the tenant eq. English or Deutsch (Standardfreigaberichtlinie vs. Default Sharing Policy)"
@@ -104,7 +101,7 @@ function exoauthentication {
   }
 
     # Connect to the exo tenant with your exo admin and security admin (gdap organization)
-    Connect-ExchangeOnline -UserPrincipalName $csa -DelegatedOrganization $custommicrosoft
+    Connect-ExchangeOnline -UserPrincipalName $csa
 
 }
 
