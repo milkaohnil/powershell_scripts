@@ -2,13 +2,16 @@
 # - Microsoft Graph: Application.Read.All, Directory.Read.All, User.Read.All, Mail.Send
 
 param (
+    [switch]$SaveHtml,
     [switch]$SendMail,
+    [switch]$SendTeams,
     [string]$OutputPath = ".\M365Lizenzreport.html",
-    [string]$MailTo = "YourRecipientEmailHere",
-    [string]$MailFrom = "YourSenderEmailHere",
+    [string]$MailTo = "YourRecipientEmailHere", # E-Mail-Adresse des Empfängers, muss im Tenant existieren
+    [string]$MailFrom = "YourSenderEmailHere", # E-Mail-Adresse des Absenders, muss im Tenant existieren
     [string]$ClientId = "YourClientIdHere",
     [string]$TenantId = "YourTenantIdHere",
-    [string]$CertificateThumbprint = "YourThumbprintHere"
+    [string]$CertificateThumbprint = "YourCertificateThumbprintHere",
+    [string]$teamsWebhook = "YourTeamsWebhookUrlHere"
 )
 
 # Funktion: Konsolenpuffer stabilisieren
@@ -246,6 +249,89 @@ function Send-LicenseMail($html) {
     }
 }
 
+function Send-LicenseTeams {
+    param (
+        [string]$WebhookUrl,
+        [string]$TenantName,
+        $Skus
+    )
+
+    $date = Get-Date -Format "dd.MM.yyyy HH:mm"
+
+    $cardBody = @(
+        @{
+            type = "TextBlock"
+            size = "Large"
+            weight = "Bolder"
+            text = "Microsoft 365 Lizenzreport - $TenantName"
+        },
+        @{
+            type = "TextBlock"
+            text = "Stand: $date"
+            isSubtle = $true
+            spacing = "None"
+        },
+        @{
+            type = "ColumnSet"
+            columns = @(
+                @{ type = "Column"; width = "stretch"; items = @(@{ type = "TextBlock"; text = "Lizenz"; weight = "Bolder" }) },
+                @{ type = "Column"; width = "auto"; items = @(@{ type = "TextBlock"; text = "Gekauft"; weight = "Bolder" }) },
+                @{ type = "Column"; width = "auto"; items = @(@{ type = "TextBlock"; text = "Verwendet"; weight = "Bolder" }) },
+                @{ type = "Column"; width = "auto"; items = @(@{ type = "TextBlock"; text = "Frei %"; weight = "Bolder" }) }
+            )
+        }
+    )
+
+    foreach ($sku in $Skus) {
+        $label = [string]$sku.SkuPartNumber
+        $enabled = [int]$sku.PrepaidUnits.Enabled
+        $used = [int]$sku.ConsumedUnits
+        $free = $enabled - $used
+        $freePercent = if ($enabled -gt 0) { [math]::Round(($free / $enabled) * 100, 1) } else { 0 }
+
+        $color = if ($freePercent -lt 1) { "Attention" }
+                 elseif ($freePercent -lt 15) { "Warning" }
+                 else { "Good" }
+
+        $cardBody += @{
+            type = "ColumnSet"
+            columns = @(
+                @{ type = "Column"; width = "stretch"; items = @(@{ type = "TextBlock"; text = "$label" }) },
+                @{ type = "Column"; width = "auto"; items = @(@{ type = "TextBlock"; text = "$enabled" }) },
+                @{ type = "Column"; width = "auto"; items = @(@{ type = "TextBlock"; text = "$used" }) },
+                @{ type = "Column"; width = "auto"; items = @(@{
+                    type = "TextBlock";
+                    text = "$freePercent%";
+                    color = $color;
+                    weight = "Bolder"
+                }) }
+            )
+        }
+    }
+
+    $payload = @{
+        type = "message"
+        attachments = @(
+            @{
+                contentType = "application/vnd.microsoft.card.adaptive"
+                content = @{
+                    type = "AdaptiveCard"
+                    version = "1.5"
+                    body = $cardBody
+                }
+            }
+        )
+    }
+
+    Invoke-RestMethod -Method Post `
+        -Uri $WebhookUrl `
+        -Body ($payload | ConvertTo-Json -Depth 10 -Compress) `
+        -ContentType 'application/json'
+
+    Write-Host "Adaptive Card an Teams gesendet." -ForegroundColor Green
+}
+
+
 
 
 # ─────────────────────────────
@@ -259,10 +345,15 @@ $skus = Get-LicenseData
 $html = Generate-LicenseHtml -skus $skus -TenantName $TenantName
 
 # Speichern
+if ($SaveHtml) {
 $html | Out-File -FilePath $OutputPath -Encoding UTF8
 Write-Host "HTML-Report gespeichert unter $OutputPath" -ForegroundColor Green
-
+}
 # Optional senden
 if ($SendMail) {
     Send-LicenseMail -html $html
+}
+
+if ($SendTeams) {
+    Send-LicenseTeams -WebhookUrl $teamsWebhook -TenantName $TenantName -Skus $skus
 }
